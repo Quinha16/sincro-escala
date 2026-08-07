@@ -1,8 +1,11 @@
 
+funcionarios = []
+sair_do_sistema = False
+
 def apresenta_menu():
-    print("=========================================")
+    print("===================================================")
     print("       SISTEMA DE GESTÃO DE ESCALA     ")
-    print("=========================================")
+    print("===================================================")
     print("")
     print("   1. Cadastra Funcionários 🤓")
     print("   2. Listar Funcionários 📝" )
@@ -13,25 +16,41 @@ def apresenta_menu():
 
 
 def cadastra_funcionario(): 
-    funcionários = input("Digite o nome do funcionário: ")
-    print(f"O nome cadastrado foi: {funcionários}")
-    
+    funcionário = input("Digite o nome do funcionário: ")
+    funcionarios.append(funcionário)
+    print(f"O nome cadastrado foi: {funcionário}")
+    print("===================================================")
+    print("Você gostaria de adicionar um novo funcionário?")
+    print(" 1. Sim ✅​")
+    print(" 2. Não ❌​")
+    seguir_cadastro = input("Escolha uma opção: ")
+    print("===================================================")
+    if seguir_cadastro == "1":
+        cadastra_funcionario()
+    if seguir_cadastro == "2":
+        print("Cadastro concluído!​✅​")
+
 def listar_funcionarios(): 
     print("Listando funcionários")
     
 def sair(): 
+    sair_do_sistema = True
     print("Saindo do Sistema de Gestão de Escala ҉")
+
+    
+    
     
 #=============================================================#
 
-opcao_menu = apresenta_menu()
+while not sair_do_sistema: 
+    opcao_menu = apresenta_menu()
 
-match opcao_menu:
-        case "1":
-            cadastra_funcionario()
-        case "2":
-            listar_funcionarios()
-        case "0":
-            sair()
-        case _:  
-            print("Opção Inválida!") 
+    match opcao_menu:
+            case "1":
+                cadastra_funcionario()
+            case "2":
+                listar_funcionarios()
+            case "0":
+                sair()
+            case _:  
+                print("Opção Inválida!") 
