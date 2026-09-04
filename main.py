@@ -1,7 +1,6 @@
-from pathlib import Path
+from funcionario import cadastra_funcionario, listar_funcionarios, excluir_funcionario
+from escala import cadastra_escala
 
-path_bd = Path("sincro-escala/BD") / "funcionario_bd.txt"
-funcionarios = []
 sair_do_sistema = False
 
 def apresenta_menu():
@@ -12,51 +11,16 @@ def apresenta_menu():
     print("   1. Cadastra Funcionários 🤓")
     print("   2. Listar Funcionários 📝" )
     print("   3. Excluir Funcionário 🗑️​")
+    print("   4. Cadastrar Escala 📆​")
     print("   0. Sair ➡️")
     print("")
     opcao_menu = input("Escolha uma opção: ")
     return opcao_menu
 
-
-def cadastra_funcionario(): 
-    funcionário = input("Digite o nome do funcionário: ")
-    with open(path_bd,"a", encoding="utf-8") as arquivo:
-        arquivo.write(f"{funcionário}\n")
-    funcionarios.append(funcionário)
-    print(f"O nome cadastrado foi: {funcionário}")
-    print("===================================================")
-    print("Você gostaria de adicionar um novo funcionário?")
-    print(" 1. Sim ✅​")
-    print(" 2. Não ❌​")
-    seguir_cadastro = input("Escolha uma opção: ")
-    print("===================================================")
-    if seguir_cadastro == "1":
-        cadastra_funcionario()
-    if seguir_cadastro == "2":
-        print("Cadastro concluído!​✅​")
-
-def listar_funcionarios():
-    with open(path_bd,"r", encoding="utf-8") as arquivo:
-        for linha in arquivo:
-            print(linha.strip())
-        
-def excluir_funcionario():
-    listar_funcionarios()
-    funcionario = input("Qual Funcionário você deseja deletar?: ")
-    with open(path_bd,"r", encoding="utf-8") as arquivo:
-        nomes = arquivo.readlines()
-       
-    with open(path_bd,"w", encoding="utf-8") as arquivo:
-        for linha in nomes:
-            if linha.strip() == funcionario:
-                linha = "" 
-
-            arquivo.write(linha) 
-                       
+    
 def sair(): 
     print("Saindo do Sistema de Gestão de Escala ҉")
 
-    
 #=============================================================#
 
 while not sair_do_sistema: 
@@ -69,6 +33,8 @@ while not sair_do_sistema:
                 listar_funcionarios()
             case "3":
                 excluir_funcionario()
+            case "4":
+                Cadastrar_Escala()
             case "0":
                 sair()
                 break
