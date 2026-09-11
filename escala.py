@@ -6,7 +6,7 @@ escalas = []
 def cadastrar_escalas(): 
     escala = input("Digite o nome da Escala: ")
     with open(path_bd,"a", encoding="utf-8") as arquivo:
-        arquivo.write(f"{escalas}\n")
+        arquivo.write(f"{escala}\n")
     escalas.append(escala)
     print(f"O nome cadastrado foi: {escala}")
     print("===================================================")
@@ -16,7 +16,24 @@ def cadastrar_escalas():
     seguir_cadastro = input("Escolha uma opção: ")
     print("===================================================")
     if seguir_cadastro == "1":
-        cadastra_escalas()
+        cadastrar_escalas()
     if seguir_cadastro == "2":
         print("Cadastro concluído!​✅​")
-        
+    
+def listar_escala(): 
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        for linha in arquivo:
+            print(linha.strip())
+            
+def excluir_escala():
+    listar_escala()
+    escala = input("Qual Escala você deseja deletar?: ")
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        nomes = arquivo.readlines()
+       
+    with open(path_bd,"w", encoding="utf-8") as arquivo:
+        for linha in nomes:
+            if linha.strip() == escala:
+                linha = "" 
+
+            arquivo.write(linha) 
