@@ -3,7 +3,14 @@ from pathlib import Path
 path_bd = Path("sincro-escala/BD") / "funcionario_bd.txt"
 funcionarios = []
 
-def cadastra_funcionario(): 
+def cadastra_funcionario():
+    print("===================================================")
+    print("              CADASTRAR FUNCIONÁRIOS     ")
+    print("===================================================")
+    print("") 
+    listar_funcionarios()
+    print("") 
+    print("===================================================")
     funcionário = input("Digite o nome do funcionário: ")
     with open(path_bd,"a", encoding="utf-8") as arquivo:
         arquivo.write(f"{funcionário}\n")
@@ -31,10 +38,4 @@ def excluir_funcionario():
     funcionario = input("Qual Funcionário você deseja deletar?: ")
     with open(path_bd,"r", encoding="utf-8") as arquivo:
         nomes = arquivo.readlines()
-       
-    with open(path_bd,"w", encoding="utf-8") as arquivo:
-        for linha in nomes:
-            if linha.strip() == funcionario:
-                linha = "" 
-
-            arquivo.write(linha) 
+        
