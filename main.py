@@ -1,5 +1,5 @@
 from funcionario import cadastra_funcionario, listar_funcionarios, excluir_funcionario
-from escala import cadastra_escala
+from escala import cadastrar_escalas, listar_escala, excluir_escala
 
 sair_do_sistema = False
 
@@ -12,9 +12,12 @@ def apresenta_menu():
     print("   2. Listar Funcionários 📝" )
     print("   3. Excluir Funcionário 🗑️​")
     print("   4. Cadastrar Escala 📆​")
+    print("   5. Listar Escala 📝​")
+    print("   6. Excluir Escala 📝​")
     print("   0. Sair ➡️")
     print("")
     opcao_menu = input("Escolha uma opção: ")
+    #rint("\n" * 30, end="")
     return opcao_menu
 
     
@@ -34,7 +37,11 @@ while not sair_do_sistema:
             case "3":
                 excluir_funcionario()
             case "4":
-                Cadastrar_Escala()
+                cadastrar_escalas()
+            case "5":
+                listar_escala()
+            case "6":
+                excluir_escala()
             case "0":
                 sair()
                 break
