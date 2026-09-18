@@ -1,49 +1,51 @@
-from funcionario import cadastra_funcionario, listar_funcionarios, excluir_funcionario
-from escala import cadastrar_escalas, listar_escala, excluir_escala
+from pathlib import Path
 
-sair_do_sistema = False
+path_bd = Path("sincro-escala/BD") / "funcionario_bd.txt"
+funcionarios = []
 
-def apresenta_menu():
+def cadastra_funcionario():
     print("===================================================")
-    print("       SISTEMA DE GESTÃO DE ESCALA     ")
+    print("              CADASTRAR FUNCIONÁRIOS     ")
     print("===================================================")
-    print("")
-    print("   1. Cadastra Funcionários 🤓")
-    print("   2. Listar Funcionários 📝" )
-    print("   3. Excluir Funcionário 🗑️​")
-    print("   4. Cadastrar Escala 📆​")
-    print("   5. Listar Escala 📝​")
-    print("   6. Excluir Escala 📝​")
-    print("   0. Sair ➡️")
-    print("")
-    opcao_menu = input("Escolha uma opção: ")
-    #rint("\n" * 30, end="")
-    return opcao_menu
+    print("") 
+    listar_funcionarios()
+    print("") 
+    print("===================================================")
+    funcionário = input("Digite o nome do funcionário: ")
+    with open(path_bd,"a", encoding="utf-8") as arquivo:
+        arquivo.write(f"{funcionário}\n")
 
-    
-def sair(): 
-    print("Saindo do Sistema de Gestão de Escala ҉")
+    print(f"O nome cadastrado foi: {funcionário}")
+    print("===================================================")
+    print("Você gostaria de adicionar um novo funcionário?")
+    print(" 1. Sim ✅​")
+    print(" 2. Não ❌​")
+    seguir_cadastro = input("Escolha uma opção: ")
+    print("===================================================")
+    if seguir_cadastro == "1":
+        cadastra_funcionario()
+    if seguir_cadastro == "2":
+        print("Cadastro concluído!​✅​")
 
-#=============================================================#
 
-while not sair_do_sistema: 
-    opcao_menu = apresenta_menu()
+def listar_funcionarios():
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        for linha in arquivo:
+            nome_limpo = linha.strip()
+            if nome_limpo not in funcionarios:
+                funcionarios.append(nome_limpo)
 
-    match opcao_menu:
-            case "1":
-                cadastra_funcionario()
-            case "2":
-                listar_funcionarios()
-            case "3":
-                excluir_funcionario()
-            case "4":
-                cadastrar_escalas()
-            case "5":
-                listar_escala()
-            case "6":
-                excluir_escala()
-            case "0":
-                sair()
-                break
-            case _:  
-                print("Opção Inválida!") 
+    print("\n".join(funcionarios))
+            
+def excluir_funcionario():
+    listar_funcionarios()
+    funcionario = input("Qual Funcionário você deseja deletar?: ")
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        nomes = arquivo.readlines()
+        
+    with open(path_bd,"w", encoding="utf-8") as arquivo:
+        for linha in nomes:
+            if linha.strip() == funcionarios:
+                linha = "" 
+
+            arquivo.write(linha) 
