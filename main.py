@@ -1,49 +1,43 @@
-from funcionario import cadastra_funcionario, listar_funcionarios, excluir_funcionario
-from escala import cadastrar_escalas, listar_escala, excluir_escala
+from pathlib import Path
 
-sair_do_sistema = False
+path_bd = Path("sincro-escala/BD") / "escalas_bd.txt"
+escalas = []
 
-def apresenta_menu():
+def cadastrar_escalas(): 
+    escala = input("Digite o nome da Escala: ")
+    with open(path_bd,"a", encoding="utf-8") as arquivo:
+        arquivo.write(f"{escala}\n")
+
+    print(f"O nome cadastrado foi: {escala}")
     print("===================================================")
-    print("       SISTEMA DE GESTÃO DE ESCALA     ")
+    print("Você gostaria de adicionar uma nova Escala?")
+    print(" 1. Sim ✅​")
+    print(" 2. Não ❌​")
+    seguir_cadastro = input("Escolha uma opção: ")
     print("===================================================")
-    print("")
-    print("   1. Cadastra Funcionários 🤓")
-    print("   2. Listar Funcionários 📝" )
-    print("   3. Excluir Funcionário 🗑️​")
-    print("   4. Cadastrar Escala 📆​")
-    print("   5. Listar Escala 📝​")
-    print("   6. Excluir Escala 📝​")
-    print("   0. Sair ➡️")
-    print("")
-    opcao_menu = input("Escolha uma opção: ")
-    #rint("\n" * 30, end="")
-    return opcao_menu
-
+    if seguir_cadastro == "1":
+        cadastrar_escalas()
+    if seguir_cadastro == "2":
+        print("Cadastro concluído!​✅​")
     
-def sair(): 
-    print("Saindo do Sistema de Gestão de Escala ҉")
+def listar_escala(): 
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        for linha in arquivo:
+            nome_limpo = linha.strip()
+            if nome_limpo not in escalas:
+                escalas.append(nome_limpo)
 
-#=============================================================#
+    print("\n".join(escalas))
+    
+def excluir_escala():
+    listar_escala()
+    escala = input("Qual Escala você deseja deletar?: ")
+    with open(path_bd,"r", encoding="utf-8") as arquivo:
+        nomes = arquivo.readlines()
+       
+    with open(path_bd,"w", encoding="utf-8") as arquivo:
+        for linha in nomes:
+            if linha.strip() == escala:
+                linha = "" 
 
-while not sair_do_sistema: 
-    opcao_menu = apresenta_menu()
-
-    match opcao_menu:
-            case "1":
-                cadastra_funcionario()
-            case "2":
-                listar_funcionarios()
-            case "3":
-                excluir_funcionario()
-            case "4":
-                cadastrar_escalas()
-            case "5":
-                listar_escala()
-            case "6":
-                excluir_escala()
-            case "0":
-                sair()
-                break
-            case _:  
-                print("Opção Inválida!") 
+            arquivo.write(linha) 
