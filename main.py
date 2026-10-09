@@ -1,43 +1,76 @@
-from pathlib import Path
+from funcionario import cadastrar_funcionarios, listar_funcionarios, excluir_funcionario
+from escala import cadastrar_escalas, listar_escala, excluir_escala
 
-path_bd = Path("sincro-escala/BD") / "escalas_bd.txt"
-escalas = []
 
-def cadastrar_escalas(): 
-    escala = input("Digite o nome da Escala: ")
-    with open(path_bd,"a", encoding="utf-8") as arquivo:
-        arquivo.write(f"{escala}\n")
+sair_do_sistema = False
 
-    print(f"O nome cadastrado foi: {escala}")
+def apresenta_menu():
     print("===================================================")
-    print("Você gostaria de adicionar uma nova Escala?")
-    print(" 1. Sim ✅​")
-    print(" 2. Não ❌​")
-    seguir_cadastro = input("Escolha uma opção: ")
+    print("       SISTEMA DE GESTÃO DE ESCALA     ")
     print("===================================================")
-    if seguir_cadastro == "1":
-        cadastrar_escalas()
-    if seguir_cadastro == "2":
-        print("Cadastro concluído!​✅​")
-    
-def listar_escala(): 
-    with open(path_bd,"r", encoding="utf-8") as arquivo:
-        for linha in arquivo:
-            nome_limpo = linha.strip()
-            if nome_limpo not in escalas:
-                escalas.append(nome_limpo)
+    print("")
+    print("   1. Cadastra Funcionários 🤓")
+    print("   2. Listar Funcionários 📝" )
+    print("   3. Excluir Funcionário 🗑️​")
+    print("   4. Cadastrar Escala 📆​")
+    print("   5. Listar Escala 📝​")
+    print("   6. Excluir Escala 📝​")
+    print("   7. Relacionar funcionários e escalas 🔗")
+    print("   0. Sair ➡️")
+    print("")
+    opcao_menu = input("Escolha uma opção: ")
+    return opcao_menu
 
-    print("\n".join(escalas))
     
-def excluir_escala():
-    listar_escala()
-    escala = input("Qual Escala você deseja deletar?: ")
-    with open(path_bd,"r", encoding="utf-8") as arquivo:
-        nomes = arquivo.readlines()
-       
-    with open(path_bd,"w", encoding="utf-8") as arquivo:
-        for linha in nomes:
-            if linha.strip() == escala:
-                linha = "" 
+def sair(): 
+    print("Saindo do Sistema de Gestão de Escala ҉")
 
-            arquivo.write(linha) 
+#=============================================================#
+
+while not sair_do_sistema: 
+    opcao_menu = apresenta_menu()
+
+    match opcao_menu:
+        case "1":
+            print("======================================")
+            print("     CADASTRO DE FUNCIONARIOS")
+            print("======================================")
+            print("")
+            cadastrar_funcionarios()
+        case "2":
+            print("======================================")
+            print("        LISTA DE FUNCIONARIOS")
+            print("======================================")
+            print("")
+            listar_funcionarios()
+        case "3":
+            print("======================================")
+            print("     REMOÇÃO DE FUNCIONARIOS")
+            print("======================================")
+            print("")
+            excluir_funcionario()
+        case "4":
+            print("======================================")
+            print("     CADASTRO DE ESCALAS")
+            print("======================================")
+            print("")
+            cadastrar_escalas()
+        case "5":
+            print("======================================")
+            print("     LISTA DE ESCALAS")
+            print("======================================")
+            print("")
+            listar_escala()
+        case "6":
+            print("======================================")
+            print("     REMOÇÃO DE ESCALAS")
+            print("======================================")
+            print("")
+            excluir_escala()
+        case "7":
+            print("Jesus")
+        case "0":
+            sair()
+            break
+        case _:  
+            print("Opção Inválida!") 
